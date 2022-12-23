@@ -34,33 +34,6 @@ CVFilter::CVFilter(QObject *parent) : QAbstractVideoFilter(parent)
         qDebug()<<"loading labels failed";
         exit(-1);
     }
-//    QFile xml(":/assets/classifiers/lbpcascade_frontalface.xml");
-
- //   if(xml.open(QFile::ReadOnly | QFile::Text))
-//    {
-   //     QTemporaryFile temp;
-     //   if(temp.open())
-       // {
-//            temp.write(xml.readAll());
-  //          temp.close();
-    //        if(classifier.load(temp.fileName().toStdString()))
-      //      {
-        //        qDebug() << "Successfully loaded classifier!";
-          //  }
-//            else
-  //          {
-    //            qDebug() << "Could not load classifier.";
-      //      }
-        //}
-        //else
-        //{
-         //   qDebug() << "Can't open temp file.";
-        //}
-    //}
-    //e/lse
-    //{
-      //  qDebug() << "Can't open XML.";
-    //}
 
 }
 
@@ -189,12 +162,6 @@ void CVFilterRunnable::processImage(QImage &image)
         detect(image);
     }
 
-//    QString filename = QStandardPaths::writableLocation(QStandardPaths::PicturesLocation) + "/" + "my_image.png";
-
-//    if(!QFile::exists(filename)){
-//        image.save(filename);
-//    }
-
 }
 
 
@@ -246,36 +213,6 @@ void CVFilterRunnable::detect(QImage image)
         }
     }
 
-    //cv::flip(frame, frame, 0);
-
-//    Mat frameGray;
-//
-//    if(frame.channels() == 3){
-//        cvtColor( frame, frameGray, COLOR_BGR2GRAY );
-//    }else if(frame.channels() == 4) {
- //       cvtColor( frame, frameGray, COLOR_BGRA2GRAY );
- //   }
-
-//    equalizeHist( frameGray, frameGray );
-
- //   std::vector<cv::Rect> detected;
-
-    //resize the frame
-//    double imageWidth = image.size().width();
-//    double imageHeight = image.size().height();
-
-//    double resizedWidth = 320;
-//    double resizedHeight = (imageHeight/imageWidth) * resizedWidth;
-
-//    cv::resize(frameGray, frameGray, cv::Size((int)resizedWidth, (int)resizedHeight));
-
-//    filter->classifier.detectMultiScale(frameGray, detected, 1.1, 10);
-
-
-
-
-
-
     for(size_t i = 0; i < detected.size(); i++){
 
         rX = double(detected[i].x) / double(frameSize.width);
@@ -301,22 +238,6 @@ void CVFilterRunnable::detect(QImage image)
     if(rects.count() > 0){
         emit filter->objectDetected(QString::fromStdString(QJsonDocument(rects).toJson().toStdString()));
     }
-
-    //saving processed image to disk after every 5 sec
-//    qint64 now = QDateTime::currentDateTime().toSecsSinceEpoch();
-//    qint64 diff = now - filter->lastProcessedImageAt;
-
-//    if(diff >= 5){
-
-//        cvtColor(frameGray, frameGray, COLOR_BGR2RGB);
-//        QImage processedImage((uchar*)frameGray.data,frameGray.cols,frameGray.rows,QImage::Format_RGB888);
-
-//        QString filename = QStandardPaths::writableLocation(QStandardPaths::PicturesLocation) + "/" + "processed_image_" + QString::number(now) + ".png";
-
-//        processedImage.save(filename);
-
-//        filter->lastProcessedImageAt = now;
-//    }
 
     filter->isProcessing = false;
 
