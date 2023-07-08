@@ -21,6 +21,7 @@
 #include <opencv2/videoio.hpp>
 #include <opencv2/imgcodecs/imgcodecs.hpp>
 
+
 using namespace cv;
 
 class CVFilter : public QAbstractVideoFilter {
@@ -32,16 +33,18 @@ public:
     virtual ~CVFilter();
 
     QVideoFilterRunnable *createFilterRunnable();
-        dnn::Net net;
+    dnn::Net net;
     std::vector<std::string> Names;
+    QStringList mNames;
     bool getFileContent(std::string fileName);
 
     void static registerQMLType();
-
+    QString osc;
 
 
 signals:
-    void objectDetected(QString rects);
+    void objectDetected(QString rects, QString mj);
+    void modelChanged();
 
 private:
     CascadeClassifier classifier;

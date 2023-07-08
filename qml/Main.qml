@@ -5,8 +5,9 @@ import QtMultimedia 5.13
 import CVFilter 1.0
 
 App {
-    width: 900
-    height: 600
+    id: root
+//    width: 900
+//    height: 600
 
     property bool drawing: false
 
@@ -15,9 +16,10 @@ App {
             boundingBoxesHolder.itemAt(i).visible = false;
     }
 
+
     Timer{
         id: drawingTimer
-        interval: 100
+        interval: 30
         onTriggered: {
             drawing = false;
         }
@@ -28,13 +30,12 @@ App {
         position: Camera.BackFace
         viewfinder {
             //resolution: "320x240"
-            maximumFrameRate: 15
+            maximumFrameRate: 30
         }
     }
 
     CVFilter{
-        id: cvFilter
-
+        id: cvFilter	
         onObjectDetected: {
 
             if(drawing) return;
@@ -44,6 +45,13 @@ App {
             resetBoundingBoxes();
 
             rects = JSON.parse(rects);
+
+            mj = JSON.parse(mj);
+            for(var i in mj)
+            {
+//                labels.text = mj[i];
+                console.log(mj[i]);
+            }
 
             var contentRect = output.contentRect;
 
@@ -63,6 +71,7 @@ App {
                 boundingBox.width = r.width;
                 boundingBox.height = r.height;
                 boundingBox.visible = true;
+
             }
 
             drawingTimer.start();
@@ -90,12 +99,26 @@ App {
                 model: 20
 
                 Rectangle{
-                    border.width: 3
-                    border.color: "#2BE982"
+                    border.width: 7
+                    border.color: "#146db3"
                     visible: false
                     color: "transparent"
-                    radius: 10
+                    radius: 30
+
+                    Text{
+                        id: labels
+                        text: qsTr("terah")
+                        anchors.left : parent.left
+                        anchors.leftMargin: 12
+                        anchors.bottom : parent.bottom
+                        anchors.bottomMargin: 12
+                        color: "#FFFFFF"
+                        font.pointSize: 20
+                        font.bold: true
+                        font.family: "Arial"
+                    }
                 }
+
             }
         }
 

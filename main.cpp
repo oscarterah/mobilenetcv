@@ -1,6 +1,6 @@
 #include <QApplication>
 #include <FelgoApplication>
-
+#include <QQmlContext>
 #include <QQmlApplicationEngine>
 #include "cvfilter.h"
 // uncomment this line to add the Live Client Module and use live reloading with your custom C++ code
